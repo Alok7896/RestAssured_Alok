@@ -4,6 +4,6 @@ public class Practice {
 
     @Test
     public void Palindrome(){
-
+        System.out.println("Welcome");
     }
 }
