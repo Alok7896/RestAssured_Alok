@@ -8,10 +8,11 @@ public class LinkedList {
     private class Node {
         int val;
         Node next;
-
+        Node prev;
         public Node(int val) {
             this.val = val;
             next = null;
+            prev=null;
         }
 
     }
@@ -46,6 +47,21 @@ public class LinkedList {
         System.out.println(temp.val);
     }
 
+    public Node ReverseLinkedList(){
+        Node prev=head;
+        Node current=head.next;
+        while (current!=null){
+            Node next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        head.next=null;
+        head=prev;
+
+        return head;
+    }
+
     public static void main(String[] args) {
         LinkedList ll1 = new LinkedList();
         ll1.addLast(1);
@@ -53,7 +69,12 @@ public class LinkedList {
         ll1.addLast(3);
         ll1.addLast(4);
         ll1.addFirst(5);
-        ll1.Display();
+       // ll1.Display();
+        Node revList=ll1.ReverseLinkedList();
+        while (revList.next!=null){
+            System.out.println(revList.val);
+            revList=revList.next;
+        }
 
     }
 }
