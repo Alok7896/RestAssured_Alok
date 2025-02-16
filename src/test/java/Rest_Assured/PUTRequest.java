@@ -1,21 +1,26 @@
 package Rest_Assured;
 
+import com.jayway.jsonpath.JsonPath;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.json.JSONObject;
+import io.restassured.response.Response;
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
 
-public class PUTRequest {
+import java.io.File;
+import java.io.IOException;
 
+public class PutRequest {
     @Test
-    public void PUTRequest(){
-        JSONObject object=new JSONObject();
-        object.put("name","Fizulu");
-        object.put("job","HouseOwner");
-        RestAssured.baseURI="https://reqres.in/api/users/619";
-        RestAssured.given()
+    public void getRequest() throws IOException {
+        String fileName=FileUtils.readFileToString(new File(System.getProperty("user.dir")+"\\src\\test\\java\\File.txt"));
+        Response res=RestAssured.given()
                 .contentType(ContentType.JSON)
-                .body(object).when().put()
-                .then().statusCode(200).log().body();
+                .baseUri("https://jsonplaceholder.typicode.com/users/")
+                .pathParam("id",1)
+                .body(fileName)
+                .when().put("/{id}").then().log().body().assertThat().statusCode(200).extract().response();
+
+        JsonPath.read(res.body().asString(),"$.name");
     }
 }

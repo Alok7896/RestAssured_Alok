@@ -1,4 +1,4 @@
-
+package Rest_Assured;
 
 import static io.restassured.RestAssured.given;
 

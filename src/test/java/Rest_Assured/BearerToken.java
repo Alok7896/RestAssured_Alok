@@ -2,35 +2,17 @@ package Rest_Assured;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 public class BearerToken {
-    @Test
-    public void BearerTokenAuthorization(){
-        Response res=RestAssured.given().
-                baseUri("https://gorest.co.in")
-                .basePath("/public/v2/users")
-                .header("Authorization","Bearer dd994c6a9b1916c5aa4ece33be972ce67f953c1796428c1e292b8f6c339254c1")
-                .get();
-        System.out.println(res.asString());
-    }
 
     @Test
-    public void BearerTokenAuthorisationPost(){
-        JSONObject obj=new JSONObject();
-        obj.put("name","Ashok");
-        obj.put("email","ashokp13@gmail.com");
-        obj.put("gender","Male");
-        obj.put("status","Active");
-        RequestSpecification reqs=RestAssured.given()
-                .baseUri("https://gorest.co.in")
-                .basePath("/public/v2/users")
-                .header("Authorization","Bearer dd994c6a9b1916c5aa4ece33be972ce67f953c1796428c1e292b8f6c339254c1")
+    public void updateRequest(){
+        RestAssured.given()
                 .contentType(ContentType.JSON)
-                .body(obj.toString());
-        reqs.when().post().then().log().all();
+                .baseUri("https://dummyjson.com/auth/me")
+                .header("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxMDY1OTExNCwiZXhwIjoxNzEwNjYyNzE0fQ.AIDeNk9Pm9Os1gNP75DwvzQ-uXjfB3TQ4DwMYwTu8-k")
+                .when().get().then().log().body();
     }
+
 }

@@ -1,3 +1,5 @@
+package Rest_Assured;
+
 public class Users {
     private int userId;
     private int id;

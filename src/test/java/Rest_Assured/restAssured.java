@@ -1,3 +1,5 @@
+package Rest_Assured;
+
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.path.json.JsonPath;

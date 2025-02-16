@@ -1,21 +1,27 @@
 package Rest_Assured;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-public class GETREQUEST {
+import static io.restassured.RestAssured.given;
 
+public class GetRequest {
     @Test
-    public void GetRequest(){
-        Response res=RestAssured.get("https://jsonplaceholder.typicode.com/posts");
-        System.out.println(res.getStatusCode());
-        System.out.println(res.getBody().asString());
-        System.out.println(res.getTime());
-    }
-
-    @Test
-    public void GetRequestRestAssured(){
-        RestAssured.given().baseUri("https://jsonplaceholder.typicode.com/posts").when().get().then().statusCode(200);
+    public void getRequest(){
+       Response response= RestAssured.given().contentType(ContentType.JSON).baseUri("https://jsonplaceholder.typicode.com/posts")
+                .when().get()
+                .then().assertThat().statusCode(200).header("Content-Type","application/json; charset=utf-8")
+                .extract().response();
+       int value=response.path("id[1]");
+       RestAssured.given()
+               .contentType(ContentType.JSON)
+               .pathParam("id",value)
+               .baseUri("https://jsonplaceholder.typicode.com/posts/")
+               .when()
+               .get("{id}")
+               .then()
+               .assertThat().log().body();
     }
 }
